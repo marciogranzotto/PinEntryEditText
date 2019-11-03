@@ -404,7 +404,8 @@ public class PinEntryEditText extends AppCompatEditText {
                 mLastCharPaint.setColor(textColor);
             if (mCharPaint != null && mCharPaint.getColor() != textColor)
                 mCharPaint.setColor(textColor);
-            if (mSingleCharPaint != null) mSingleCharPaint.setColor(getCurrentHintTextColor());
+            if (mSingleCharPaint != null && getCurrentHintTextColor() != mSingleCharPaint.getColor())
+                mSingleCharPaint.setColor(getCurrentHintTextColor());
         }
     }
 
