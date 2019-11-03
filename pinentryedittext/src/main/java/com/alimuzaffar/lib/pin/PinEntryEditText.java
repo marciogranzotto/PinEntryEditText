@@ -349,6 +349,28 @@ public class PinEntryEditText extends AppCompatEditText {
     }
 
     @Override
+    public void setTextColor(int color) {
+        super.setTextColor(color);
+        onTextColorChange();
+    }
+
+    @Override
+    public void setTextColor(ColorStateList colors) {
+        super.setTextColor(colors);
+        onTextColorChange();
+    }
+
+    private void onTextColorChange() {
+        mOriginalTextColors = getTextColors();
+        if (mOriginalTextColors != null) {
+            mLastCharPaint.setColor(mOriginalTextColors.getDefaultColor());
+            mCharPaint.setColor(mOriginalTextColors.getDefaultColor());
+            mSingleCharPaint.setColor(getCurrentHintTextColor());
+        }
+        invalidate();
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         //super.onDraw(canvas);
         CharSequence text = getFullText();
