@@ -75,6 +75,7 @@ public class PinEntryEditText extends AppCompatEditText {
     protected float mLineStroke = 1; //1dp by default
     protected float mLineStrokeSelected = 2; //2dp by default
     protected Paint mLinesPaint;
+    protected Integer mTextErrorColor = null;
     protected boolean mAnimate = false;
     protected boolean mHasError = false;
     protected ColorStateList mOriginalTextColors;
@@ -150,6 +151,7 @@ public class PinEntryEditText extends AppCompatEditText {
             mIsDigitSquare = ta.getBoolean(R.styleable.PinEntryEditText_pinBackgroundIsSquare, mIsDigitSquare);
             mPinBackground = ta.getDrawable(R.styleable.PinEntryEditText_pinBackgroundDrawable);
             mShouldSkipMaskLastChar = ta.getBoolean(R.styleable.PinEntryEditText_pinSkipMaskLastChar, mShouldSkipMaskLastChar);
+            mTextErrorColor = ta.getColor(R.styleable.PinEntryEditText_pinTextErrorColor, mTextErrorColor);
             ColorStateList colors = ta.getColorStateList(R.styleable.PinEntryEditText_pinLineColors);
             if (colors != null) {
                 mColorStates = colors;
@@ -349,29 +351,6 @@ public class PinEntryEditText extends AppCompatEditText {
     }
 
     @Override
-    public void setTextColor(int color) {
-        super.setTextColor(color);
-        onTextColorChange();
-    }
-
-    @Override
-    public void setTextColor(ColorStateList colors) {
-        super.setTextColor(colors);
-        onTextColorChange();
-    }
-
-    private void onTextColorChange() {
-        mOriginalTextColors = getTextColors();
-        if (mOriginalTextColors != null) {
-            if (mLastCharPaint != null)
-                mLastCharPaint.setColor(mOriginalTextColors.getDefaultColor());
-            if (mCharPaint != null) mCharPaint.setColor(mOriginalTextColors.getDefaultColor());
-            if (mSingleCharPaint != null) mSingleCharPaint.setColor(getCurrentHintTextColor());
-        }
-        invalidate();
-    }
-
-    @Override
     protected void onDraw(Canvas canvas) {
         //super.onDraw(canvas);
         CharSequence text = getFullText();
@@ -410,6 +389,21 @@ public class PinEntryEditText extends AppCompatEditText {
                 canvas.drawLine(mLineCoords[i].left, mLineCoords[i].top, mLineCoords[i].right, mLineCoords[i].bottom, mLinesPaint);
             }
         }
+    }
+
+    private void setTextColor() {
+        mOriginalTextColors = getTextColors();
+        Integer textColor = mHasError ? mTextErrorColor : null;
+        if (textColor == null && mOriginalTextColors != null) {
+            textColor = mOriginalTextColors.getDefaultColor();
+        }
+        if (textColor != null) {
+            if (mLastCharPaint != null)
+                mLastCharPaint.setColor(textColor);
+            if (mCharPaint != null) mCharPaint.setColor(textColor);
+            if (mSingleCharPaint != null) mSingleCharPaint.setColor(getCurrentHintTextColor());
+        }
+        invalidate();
     }
 
     private CharSequence getFullText() {

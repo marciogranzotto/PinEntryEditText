@@ -16,5 +16,6 @@
         <attr name="pinBackgroundDrawable" format="reference" />
         <attr name="pinBackgroundIsSquare" format="boolean" />
         <attr name="pinSkipMaskLastChar" format="boolean" />
+        <attr name="pinTextErrorColor" format="color" />
     </declare-styleable>
 </resources>
