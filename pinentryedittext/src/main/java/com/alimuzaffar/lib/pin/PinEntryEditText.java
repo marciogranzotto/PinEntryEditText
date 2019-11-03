@@ -151,7 +151,10 @@ public class PinEntryEditText extends AppCompatEditText {
             mIsDigitSquare = ta.getBoolean(R.styleable.PinEntryEditText_pinBackgroundIsSquare, mIsDigitSquare);
             mPinBackground = ta.getDrawable(R.styleable.PinEntryEditText_pinBackgroundDrawable);
             mShouldSkipMaskLastChar = ta.getBoolean(R.styleable.PinEntryEditText_pinSkipMaskLastChar, mShouldSkipMaskLastChar);
-            mTextErrorColor = ta.getColor(R.styleable.PinEntryEditText_pinTextErrorColor, mTextErrorColor);
+            if (ta.hasValue(R.styleable.PinEntryEditText_pinTextErrorColor)) {
+                mTextErrorColor = ta.getColor(R.styleable.PinEntryEditText_pinTextErrorColor, -1);
+            }
+
             ColorStateList colors = ta.getColorStateList(R.styleable.PinEntryEditText_pinLineColors);
             if (colors != null) {
                 mColorStates = colors;
