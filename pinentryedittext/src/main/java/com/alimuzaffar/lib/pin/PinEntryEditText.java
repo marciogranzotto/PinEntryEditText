@@ -259,12 +259,7 @@ public class PinEntryEditText extends AppCompatEditText {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        mOriginalTextColors = getTextColors();
-        if (mOriginalTextColors != null) {
-            mLastCharPaint.setColor(mOriginalTextColors.getDefaultColor());
-            mCharPaint.setColor(mOriginalTextColors.getDefaultColor());
-            mSingleCharPaint.setColor(getCurrentHintTextColor());
-        }
+        setTextColor();
         int availableWidth = getWidth() - ViewCompat.getPaddingEnd(this) - ViewCompat.getPaddingStart(this);
         if (mSpace < 0) {
             mCharSize = (availableWidth / (mNumChars * 2 - 1));
@@ -356,6 +351,7 @@ public class PinEntryEditText extends AppCompatEditText {
     @Override
     protected void onDraw(Canvas canvas) {
         //super.onDraw(canvas);
+        setTextColor();
         CharSequence text = getFullText();
         int textLength = text.length();
         float[] textWidths = new float[textLength];
