@@ -668,6 +668,10 @@ public class PinEntryEditText extends AppCompatEditText {
         mOnPinEnteredListener = l;
     }
 
+    public void setOnErrorStateChangedListener(OnErrorStateChangedListener l) {
+        mOnErrorStateChangedListener = l;
+    }
+
     public interface OnPinEnteredListener {
         void onPinEntered(CharSequence str);
     }
