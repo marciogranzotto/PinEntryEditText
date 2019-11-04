@@ -74,6 +74,7 @@ public class PinEntryEditText extends AppCompatEditText {
 
     protected OnClickListener mClickListener;
     protected OnPinEnteredListener mOnPinEnteredListener = null;
+    protected OnErrorStateChangedListener mOnErrorStateChangedListener = null;
 
     protected float mLineStroke = 1; //1dp by default
     protected float mLineStrokeSelected = 2; //2dp by default
@@ -491,6 +492,8 @@ public class PinEntryEditText extends AppCompatEditText {
 
     public void setError(boolean hasError) {
         mHasError = hasError;
+        if (mOnErrorStateChangedListener != null)
+            mOnErrorStateChangedListener.onErrorStateChanged(hasError);
         invalidate();
     }
 
@@ -667,5 +670,9 @@ public class PinEntryEditText extends AppCompatEditText {
 
     public interface OnPinEnteredListener {
         void onPinEntered(CharSequence str);
+    }
+
+    public interface OnErrorStateChangedListener {
+        void onErrorStateChanged(boolean isError);
     }
 }
